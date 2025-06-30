@@ -101,9 +101,9 @@ const Navbar = () => {
           </div>
           {!user?.uid ? (
             <>
-              <Link to="/register" className="btn">
+              {/* <Link to="/register" className="btn">
                 Register
-              </Link>
+              </Link> */}
               <Link to="/login" className="btn">
                 Login
               </Link>

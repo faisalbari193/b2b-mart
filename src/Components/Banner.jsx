@@ -12,109 +12,81 @@ const textVariant = {
     opacity: 1,
     x: 0,
     transition: {
-      delay: i * 0.5,
+      delay: i * 0.4,
       duration: 0.6,
     },
   }),
 };
 
+const slides = [
+  {
+    title: "🔥 Super Discount: 50% OFF",
+    description: "On all Electronics Devices – limited time offer!",
+    image:
+      "https://i.postimg.cc/4N4pT0CH/modern-stationary-collection-arrangement.jpg",
+  },
+  {
+    title: "🌿 Summer Sale: Buy 1 Get 1 Free",
+    description:
+      "Grab premium Products now and double your productivity work-load!",
+    image:
+      "https://i.postimg.cc/qMXhgxrV/summer-sale-promotion-discount-concept.jpg",
+  },
+  {
+    title: "🚛 Free Shipping",
+    description: "On all bulk orders above $100 – delivered to your door.",
+    image:
+      "https://i.postimg.cc/zX1HJP9F/free-shipping-delivery-stamp-graphic-concept.jpg",
+  },
+];
+
 const Banner = () => {
   return (
-    <div className="w-full max-w-7xl mx-auto mt-6">
-      
+    <div className="w-full">
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
-        spaceBetween={30}
+        spaceBetween={0}
         centeredSlides={true}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         navigation={true}
-        className="rounded-b-2xl shadow-lg"
+        className="w-full h-[70vh]"
       >
-        <SwiperSlide>
-          <div
-            className="rounded-2xl flex flex-col items-start justify-center min-h-[300px] bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://i.postimg.cc/4N4pT0CH/modern-stationary-collection-arrangement.jpg')",
-            }}
-          >
-            <motion.h2
-              className="text-3xl font-bold mb-2 text-black bg-opacity-50 px-4 py-2 rounded"
-              custom={0}
-              initial="hidden"
-              animate="visible"
-              variants={textVariant}
+        {slides.map((slide, idx) => (
+          <SwiperSlide key={idx}>
+            <div
+              className="w-full h-full relative bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${slide.image})`,
+              }}
             >
-              🔥 Super Discount: 50% OFF
-            </motion.h2>
-            <motion.p
-              className="text-lg text-white bg-opacity-50 px-4 py-2 rounded"
-              custom={1}
-              initial="hidden"
-              animate="visible"
-              variants={textVariant}
-            >
-              On all Electronics Devices – limited time offer!
-            </motion.p>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div
-            className="p-10 rounded-2xl flex flex-col items-start justify-center min-h-[300px] bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://i.postimg.cc/qMXhgxrV/summer-sale-promotion-discount-concept.jpg')",
-            }}
-          >
-            <motion.h2
-              className="text-3xl font-bold mb-2 text-black bg-opacity-50 px-4 py-2 rounded"
-              custom={0}
-              initial="hidden"
-              animate="visible"
-              variants={textVariant}
-            >
-              🌿 Summer Sale: Buy 1 Get 1 Free
-            </motion.h2>
-            <motion.p
-              className="text-lg text-black bg-opacity-50 px-4 py-2 rounded"
-              custom={1}
-              initial="hidden"
-              animate="visible"
-              variants={textVariant}
-            >
-              Grab premium Products now and double your productivity work-load!
-            </motion.p>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div
-            className="p-10 rounded-2xl flex flex-col items-start justify-center min-h-[300px] bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://i.postimg.cc/zX1HJP9F/free-shipping-delivery-stamp-graphic-concept.jpg')",
-            }}
-          >
-            <motion.h2
-              className="text-3xl font-bold mb-2 text-black bg-opacity-50 px-4 py-2 rounded"
-              custom={0}
-              initial="hidden"
-              animate="visible"
-              variants={textVariant}
-            >
-              🚛 Free Shipping
-            </motion.h2>
-            <motion.p
-              className="text-lg text-black bg-opacity-50 px-4 py-2 rounded"
-              custom={1}
-              initial="hidden"
-              animate="visible"
-              variants={textVariant}
-            >
-              On all bulk orders above $100 – delivered to your door.
-            </motion.p>
-          </div>
-        </SwiperSlide>
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent z-0"></div>
+
+              {/* Centered Text */}
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
+                <motion.h2
+                  className="text-2xl md:text-4xl font-bold text-white mb-4"
+                  custom={0}
+                  initial="hidden"
+                  animate="visible"
+                  variants={textVariant}
+                >
+                  {slide.title}
+                </motion.h2>
+                <motion.p
+                  className="text-sm md:text-lg text-white"
+                  custom={1}
+                  initial="hidden"
+                  animate="visible"
+                  variants={textVariant}
+                >
+                  {slide.description}
+                </motion.p>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
