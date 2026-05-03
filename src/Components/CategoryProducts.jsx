@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Rating from "react-rating";
+import productData from "../../json/productcategory.json";
 
 const CategoryProducts = () => {
   const { categoryName } = useParams();
@@ -8,11 +9,9 @@ const CategoryProducts = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const encodedCategory = encodeURIComponent(categoryName);
-    fetch(`https://b2b-server-three.vercel.app/products?category=${encodedCategory}`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error("Error fetching products:", err));
+    const decodedCategory = decodeURIComponent(categoryName);
+    const filteredProducts = productData.filter(p => p.categoryName === decodedCategory);
+    setProducts(filteredProducts);
   }, [categoryName]);
 
   return (

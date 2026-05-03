@@ -12,7 +12,6 @@ import AddProducts from "../Pages/AddProducts";
 import MyCart from "../Pages/MyCart";
 import ErrorPage from "../Pages/ErrorPage";
 import MyProducts from "../Pages/MyProducts";
-import CategoryCards from "../Pages/CategoryCards";
 
 const router = createBrowserRouter([
   {
@@ -23,14 +22,10 @@ const router = createBrowserRouter([
       { path: "/category/:categoryName", Component: CategoryProducts },
       { path: "/register", Component: Register },
       { path: "/login", Component: Login },
-      { path: "/all-categories", Component: CategoryCards },
+
       {
         path: "/products",
-        element: (
-          <PrivateRoutes>
-            <ProductList />
-          </PrivateRoutes>
-        ),
+        Component: ProductList,
       },
       {
         path: "/add-products",

@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 const Categories = () => {
-  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("https://b2b-server-three.vercel.app/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => console.error("Error loading categories:", err));
-  }, []);
+  const categories = [
+    { name: "Electronics", image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500&h=500&fit=crop" },
+    { name: "Fashion", image: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&h=500&fit=crop" },
+    { name: "HouseWork", image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&h=500&fit=crop" },
+    { name: "Sports", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=500&h=500&fit=crop" },
+    { name: "Book", image: "https://images.unsplash.com/photo-1495640388908-05f241071192?w=500&h=500&fit=crop" },
+    { name: "Toys", image: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=500&h=500&fit=crop" },
+  ];
   return (
     <div className="max-w-7xl mx-auto mt-10 px-4">
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">

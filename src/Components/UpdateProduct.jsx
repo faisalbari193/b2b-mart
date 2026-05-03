@@ -1,24 +1,33 @@
 import React, { useEffect, useState, use } from "react";
 import { useParams, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
+import productData from "../../json/productcategory.json";
 
 const UpdateProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const { user } = use(AuthContext);
   useEffect(() => {
     if (!user?.email) {
       navigate("/login");
     }
-    fetch(`https://b2b-server-three.vercel.app/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => setProduct(data));
-    fetch("https://b2b-server-three.vercel.app/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
+    const foundProduct = productData.find((p) => p._id === id);
+    if (foundProduct) {
+      setProduct(foundProduct);
+    } else {
+      setProduct(null);
+    }
   }, [id, user, navigate]);
+
+  const categories = [
+    { _id: "1", name: "Electronics" },
+    { _id: "2", name: "Fashion" },
+    { _id: "3", name: "HouseWork" },
+    { _id: "4", name: "Sports" },
+    { _id: "5", name: "Book" },
+    { _id: "6", name: "Toys" },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,18 +43,11 @@ const UpdateProduct = () => {
       minQty: parseInt(form.minQty.value),
     };
 
-    fetch(`https://b2b-server-three.vercel.app/products/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedProduct),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        alert("Product updated successfully!");
-        navigate("/products");
-      });
+    // Mock product update
+    setTimeout(() => {
+      alert("Product updated successfully!");
+      navigate("/products");
+    }, 500);
   };
 
   if (!product) return <p>Loading...</p>;

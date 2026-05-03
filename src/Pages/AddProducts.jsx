@@ -42,30 +42,16 @@ const AddProducts = () => {
       });
       return;
     }
-    fetch("https://b2b-server-three.vercel.app/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        Swal.fire({
-          icon: "success",
-          title: "Product added successfully!",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        navigate("/products");
-      })
-      .catch((err) => {
-        Swal.fire({
-          icon: "error",
-          title: "Something went wrong!",
-          text: err.message,
-        });
+    // Mock adding product
+    setTimeout(() => {
+      Swal.fire({
+        icon: "success",
+        title: "Product added successfully!",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      navigate("/products");
+    }, 500);
   };
 
   return (

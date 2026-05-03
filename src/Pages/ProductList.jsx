@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Rating from "react-rating";
+import productData from "../../json/productcategory.json";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -9,10 +10,7 @@ const ProductList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://b2b-server-three.vercel.app/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error("Error fetching products:", err));
+    setProducts(productData);
   }, []);
 
   const displayedProducts = filtered

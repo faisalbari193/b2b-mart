@@ -2,6 +2,7 @@ import React, { useEffect, useState, use } from "react";
 import { useParams, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
+import productData from "../../json/productcategory.json";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -11,10 +12,12 @@ const ProductDetails = () => {
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch(`https://b2b-server-three.vercel.app/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => setProduct(data))
-      .catch((err) => console.error(err));
+    const foundProduct = productData.find((p) => p._id === id);
+    if (foundProduct) {
+      setProduct(foundProduct);
+    } else {
+      setProduct(null);
+    }
   }, [id]);
 
   const handleBuy = () => {
@@ -36,42 +39,19 @@ const ProductDetails = () => {
       return;
     }
 
-    fetch(`https://b2b-server-three.vercel.app/cart`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userEmail: user.email,
-        productId: id,
-        quantity: quantity,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((data) => {
-            throw new Error(data.error || "Failed to add to cart");
-          });
-        }
-        return res.json();
-      })
-      .then(() => {
-        Swal.fire({
-          icon: "success",
-          title: "Added to Cart!",
-        });
-        setShowModal(false);
-        setProduct((prev) => ({
-          ...prev,
-          quantity: prev.quantity - quantity,
-        }));
-        setQuantity(1);
-      })
-      .catch((err) => {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: err.message,
-        });
+    // Mock Add to Cart
+    setTimeout(() => {
+      Swal.fire({
+        icon: "success",
+        title: "Added to Cart!",
       });
+      setShowModal(false);
+      setProduct((prev) => ({
+        ...prev,
+        quantity: prev.quantity - quantity,
+      }));
+      setQuantity(1);
+    }, 500);
   };
 
   if (!user?.email) {

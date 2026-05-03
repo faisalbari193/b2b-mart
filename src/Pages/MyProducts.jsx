@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import productData from "../../json/productcategory.json";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
@@ -11,19 +12,8 @@ const MyProducts = () => {
 
   useEffect(() => {
     if (!user?.uid) return navigate("/login");
-    fetch(`https://b2b-server-three.vercel.app/my-products/${user.uid}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setMyProds(data);
-        } else {
-          console.error("Expected array but got:", data);
-          setMyProds([]);
-        }
-      })
-      .catch(() =>
-        Swal.fire({ icon: "error", title: "Failed to get your products" })
-      );
+    // Mock fetching user's products
+    setMyProds(productData.slice(0, 6)); // Just grab the first 6 for demo
   }, [user, navigate]);
 
   if (!user?.email) return null;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
+import productData from "../../json/productcategory.json";
 
 const MyCart = () => {
   const { user } = useContext(AuthContext);
@@ -9,32 +10,22 @@ const MyCart = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://b2b-server-three.vercel.app/cart/${user?.email}`)
-        .then((res) => res.json())
-        .then((data) => setCartItems(data))
-        .catch((err) => console.error("Failed to fetch cart:", err));
+      // Mock cart items mapping to product IDs
+      const demoCart = [
+        { _id: "cart_01", productId: "prod_0001", quantity: 2 },
+        { _id: "cart_02", productId: "prod_0005", quantity: 1 },
+      ];
+      setCartItems(demoCart);
     }
   }, [user?.email]);
 
   const handleRemove = (cartId) => {
-    fetch(`https://b2b-server-three.vercel.app/cart/${cartId}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then(() => {
-        Swal.fire({
-          icon: "success",
-          title: "Removed from Cart",
-        });
-        setCartItems((prev) => prev.filter((item) => item._id !== cartId));
-      })
-      .catch((err) => {
-        console.error("Failed to delete item:", err);
-        Swal.fire({
-          icon: "error",
-          title: "Failed to remove",
-        });
-      });
+    // Mock remove from cart
+    Swal.fire({
+      icon: "success",
+      title: "Removed from Cart",
+    });
+    setCartItems((prev) => prev.filter((item) => item._id !== cartId));
   };
 
   if (!user?.email) {
@@ -91,16 +82,13 @@ const CartCard = ({ item, onRemove, user }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://b2b-server-three.vercel.app/products/${item.productId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch product:", err);
-        setLoading(false);
-      });
+    const foundProduct = productData.find(p => p._id === item.productId);
+    if (foundProduct) {
+      setProduct(foundProduct);
+    } else {
+      console.error("Failed to fetch product");
+    }
+    setLoading(false);
   }, [item.productId, user]);
 
   const timestamp = parseInt(item._id.toString().substring(0, 8), 16) * 1000;
@@ -152,22 +140,12 @@ const CartTable = ({ items, onRemove }) => {
 
   useEffect(() => {
     const fetchAllProducts = async () => {
-      const productData = {};
-      await Promise.all(
-        items.map((item) =>
-          fetch(
-            `https://b2b-server-three.vercel.app/products/${item.productId}`
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              productData[item._id] = data;
-            })
-            .catch(() => {
-              productData[item._id] = null;
-            })
-        )
-      );
-      setProducts(productData);
+      const productDataMap = {};
+      items.forEach((item) => {
+        const p = productData.find(prod => prod._id === item.productId);
+        productDataMap[item._id] = p || null;
+      });
+      setProducts(productDataMap);
       setLoading(false);
     };
 
