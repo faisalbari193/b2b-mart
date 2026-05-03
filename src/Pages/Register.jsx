@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { updateProfile } from "firebase/auth";
 
 const Register = () => {
   const { createUser } = React.useContext(AuthContext);
@@ -35,22 +34,13 @@ const Register = () => {
 
     createUser(email, password)
       .then((result) => {
-        updateProfile(result.user, {
-          displayName: name,
-          photoURL: photoURL,
-        })
-          .then(() => {
-            Swal.fire({
-              icon: "success",
-              title: "Registration Successful!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            navigate(from, { replace: true });
-          })
-          .catch(() => {
-            toast.error("Profile update failed");
-          });
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         toast.error(error.message);

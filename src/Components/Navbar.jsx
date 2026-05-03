@@ -3,9 +3,7 @@ import { TfiShoppingCartFull } from "react-icons/tfi";
 import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
-import { signOut } from "firebase/auth";
 import Marquee from "react-fast-marquee";
-import { auth } from "../Firebase/firebsae.init";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
@@ -13,9 +11,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
-    signOut(auth).catch((error) => {
-      console.error("Logout error:", error);
-    });
+    // signOut functionality would go here
     setShowLogout(false);
   };
   useEffect(() => {
