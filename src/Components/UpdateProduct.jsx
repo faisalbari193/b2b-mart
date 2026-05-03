@@ -12,11 +12,7 @@ const UpdateProduct = () => {
     if (!user?.email) {
       navigate("/login");
     }
-    fetch(`https://b2b-server-three.vercel.app/products/${id}`, {
-      headers: {
-        authorization: `Bearer ${user?.accessToken}`,
-      },
-    })
+    fetch(`https://b2b-server-three.vercel.app/products/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
     fetch("https://b2b-server-three.vercel.app/categories")

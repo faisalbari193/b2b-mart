@@ -9,11 +9,7 @@ const MyCart = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://b2b-server-three.vercel.app/cart/${user?.email}`, {
-        headers: {
-          authorization: `Bearer ${user?.accessToken}`,
-        },
-      })
+      fetch(`https://b2b-server-three.vercel.app/cart/${user?.email}`)
         .then((res) => res.json())
         .then((data) => setCartItems(data))
         .catch((err) => console.error("Failed to fetch cart:", err));
@@ -95,11 +91,7 @@ const CartCard = ({ item, onRemove, user }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://b2b-server-three.vercel.app/products/${item.productId}`, {
-      headers: {
-        authorization: `Bearer ${user?.accessToken}`,
-      },
-    })
+    fetch(`https://b2b-server-three.vercel.app/products/${item.productId}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);

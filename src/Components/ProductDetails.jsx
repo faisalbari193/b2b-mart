@@ -11,11 +11,7 @@ const ProductDetails = () => {
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch(`https://b2b-server-three.vercel.app/products/${id}`, {
-      headers: {
-        authorization: `Bearer ${user?.accessToken}`,
-      },
-    })
+    fetch(`https://b2b-server-three.vercel.app/products/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data))
       .catch((err) => console.error(err));

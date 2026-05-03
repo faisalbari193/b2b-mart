@@ -11,11 +11,7 @@ const MyProducts = () => {
 
   useEffect(() => {
     if (!user?.uid) return navigate("/login");
-    fetch(`https://b2b-server-three.vercel.app/my-products/${user.uid}`, {
-      headers: {
-        authorization: `Bearer ${user?.accessToken}`,
-      },
-    })
+    fetch(`https://b2b-server-three.vercel.app/my-products/${user.uid}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {

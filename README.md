@@ -23,7 +23,7 @@ To provide a seamless online B2B experience for:
 - ✅ Private Cart Management
 - ✅ View, Cancel Orders
 - ✅ My Products (view your added products)
-- ✅ Protected Routes with JWT
+- ✅ Protected Routes
 - ✅ Backend APIs with MongoDB
 
 ## 🧰 Tech Stack
@@ -39,7 +39,6 @@ To provide a seamless online B2B experience for:
 - Express.js
 - MongoDB (Mongoose)
 - CORS
-- JSON Web Token (JWT)
 - Dotenv
 
 ## 📦 NPM Packages Used
